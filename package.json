@@ -1,5 +1,5 @@
 {
-  "name": "rss fetch",
+  "name": "rss-fetch",
   "version": "0.0.1",
   "private": true,
   "scripts": {
