@@ -1,5 +1,6 @@
 extends layout
 block content
+    - var showPage = 8
     div.uk-grid
         div.uk-width-small-1-1
             if posts.length
@@ -21,14 +22,63 @@ block content
                             li
                                 a(href="/posts/"+ (page-1))
                                     i.uk-icon-angle-double-left
-                        - for(var i= 1; i<= pages; i++){
+                        // 大于显示分页，预留头尾
+                        if pages > (showPage + 1)
+                            - if (page < showPage){
+                                - for(var i=1;i<= showPage;i++){
+                                    - if (i == page)
+                                        li.uk-active
+                                            span= i
+                                    - else
+                                        li
+                                            a(href="/posts/" + i)= i
+                                -}
+                                li
+                                    span ...
+                                li
+                                    a(href="/posts/"+pages)= pages
+                            // 倒数几页，预留向前1页
+                            - } else if (page > (pages - showPage + 1)){
+                                li
+                                    a(href="/posts/1") 1
+                                li
+                                    span ...
+                                - for(var i=(pages- showPage + 1);i<= pages;i++){
+                                    - if (i == page)
+                                        li.uk-active
+                                            span= i
+                                    - else
+                                        li
+                                            a(href="/posts/" + i)= i
+                                -}
+                            - } else {
+                                li
+                                    a(href="/posts/1") 1
+                                li
+                                    span ...
+                                //显示前后showPage/ 2页
+                                - for(var i=page-(showPage/ 2 -1);i<(page+ showPage/ 2);i++){
+                                    - if (i == page)
+                                        li.uk-active
+                                            span= i
+                                    - else
+                                        li
+                                            a(href="/posts/" + i)= i
+                                -}
+                                li
+                                    span ...
+                                li
+                                    a(href="/posts/"+pages)= pages
+                            - }
+                        else
+                            - for(var i= 1;i<=pages;i++){
                             - if (i == page)
                                 li.uk-active
                                     span= i
                             - else
                                 li
                                     a(href="/posts/" + i)= i
-                        - }
+                            -}
                         if page == pages
                             li.uk-disabled
                                 span
