@@ -1,0 +1,28 @@
+extends layout
+block content
+    div.uk-grid
+        div.uk-width-large-1-1
+            if auth
+                form.uk-form(action="/new",method="post")
+                    fieldset
+                        input.uk-form-width-large(type= "text",placeholder= "RSS url",name="feedUrl")
+                        button.uk-button 确认添加
+                hr
+            table.uk-table.uk-table-hover
+                thead
+                    tr
+                        th Blog
+                        th Feed Url
+                        th Create At
+                        if auth
+                            th Delete
+                tbody
+                    each feed in feeds
+                        tr
+                            td
+                              a(href=feed.url,title=feed.title,target="_blank")= feed.title
+                            td= feed.feedUrl
+                            td= feed.createTime
+                            if auth
+                                td
+                                    a.uk-button.uk-button-danger(href="/del/" + feed._id) 删除

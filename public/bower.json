@@ -1,0 +1,22 @@
+{
+  "name": "bower",
+  "version": "0.0.0",
+  "authors": [
+    "laotan <i@laotan.net>"
+  ],
+  "description": "vendor for zapd",
+  "license": "MIT",
+  "homepage": "http://laotan.net",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.0",
+    "uikit":"~2.8.0"
+  }
+}

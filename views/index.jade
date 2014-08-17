@@ -1,0 +1,42 @@
+extends layout
+block content
+    div.uk-grid
+        div.uk-width-small-1-1
+            if posts.length
+                ul.uk-list.uk-list-line
+                    each item in posts
+                        li
+                            div.uk-grid
+                                div.uk-width-2-3
+                                    a(href= item.url,target='_blank')= item.title
+                                div.uk-width-1-3
+                                    span= item.postTime
+                if pages > 1
+                    ul.uk-pagination
+                        if page == 1
+                            li.uk-disabled
+                                span
+                                    i.uk-icon-angle-double-left
+                        else
+                            li
+                                a(href="/posts/"+ (page-1))
+                                    i.uk-icon-angle-double-left
+                        - for(var i= 1; i<= pages; i++){
+                            - if (i == page)
+                                li.uk-active
+                                    span= i
+                            - else
+                                li
+                                    a(href="/posts/" + i)= i
+                        - }
+                        if page == pages
+                            li.uk-disabled
+                                span
+                                    i.uk-icon-angle-double-right
+                        else
+                            li
+                                a(href="/posts/" + (page + 1))
+                                    i.uk-icon-angle-double-right
+            else
+                div.uk-alert.uk-alert-warning
+                    | 没有文章，o(╯□╰)o
