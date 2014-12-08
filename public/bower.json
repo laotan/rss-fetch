@@ -17,6 +17,6 @@
   ],
   "dependencies": {
     "jquery": "~2.1.0",
-    "uikit":"~2.8.0"
+    "uikit":"~2.11.0"
   }
 }
