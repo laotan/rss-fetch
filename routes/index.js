@@ -57,14 +57,18 @@ router.get('/posts/:page', function (req, res) {
             error: err
         });
         return Posts.count().exec(function (e, count) {
-            return res.render('index', {
-                title: 'All Posts',
-                menus: siteMenus,
-                activeMenu: 1,
-                posts: posts,
-                page: page + 1,
-                pages:count / perPage
-            });
+            if(req.param("callback")){
+                return res.jsonp(posts);
+            }else{
+                return res.render('index', {
+                    title: 'All Posts',
+                    menus: siteMenus,
+                    activeMenu: 1,
+                    posts: posts,
+                    page: page + 1,
+                    pages: Math.ceil(count / perPage)
+                });
+            }
         });
     });
 });
