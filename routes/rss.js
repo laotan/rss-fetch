@@ -40,18 +40,19 @@ router.get('/', function (req, res) {
                                         title: item.title,
                                         url: item.link,
                                         desc: item.description,
-                                        feedId: items.id,
+                                        feedId: items._id,
                                         postTime: item.pubDate
-                                    }).save(function (e) {
-                                            console.log(e)
+                                    }).save(function(e){
+                                            if (e) console.log(e);
                                         });
                                 }
                             }
                         })
                 });
             });
-            return res.send("done");
+            return res.send("done！");
         });
+
     } else {
         res.send(500, {
             error: "禁止访问"

@@ -5,7 +5,6 @@ var mongoose = require( 'mongoose' );
 var Schema   = mongoose.Schema;
 
 var Feeds = new Schema({
-    id    : Number,
     title    : String,
     url    : String,
     feedUrl    : String,
@@ -13,11 +12,10 @@ var Feeds = new Schema({
 });
 
 var Posts = new Schema({
-    id    : Number,
     title : String,
     url   : String,
     desc  : String,
-    feedId: Number,
+    feedId: {type: Schema.Types.ObjectId, ref: "Feeds"},
     postTime : Date
 });
 
