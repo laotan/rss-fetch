@@ -17,12 +17,12 @@ block content
                         if auth
                             th Delete
                 tbody
-                    each feed in feeds
-                        tr
+                each feed in feeds
+                    tr
+                        td
+                            a(href=feed.url,title=feed.title,target="_blank")= feed.title
+                        td= feed.feedUrl
+                        td= moment(feed.createTime).format("YYYY/MM/DD")
+                        if auth
                             td
-                              a(href=feed.url,title=feed.title,target="_blank")= feed.title
-                            td= feed.feedUrl
-                            td= feed.createTime
-                            if auth
-                                td
-                                    a.uk-button.uk-button-danger(href="/del/" + feed._id) 删除
+                                a.uk-button.uk-button-danger(href="/del/" + feed._id) 删除

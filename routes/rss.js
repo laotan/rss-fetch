@@ -42,7 +42,7 @@ router.get('/', function (req, res) {
                                         desc: item.description,
                                         feedId: items._id,
                                         postTime: item.pubDate
-                                    }).save(function(e){
+                                    }).save(function (e) {
                                             if (e) console.log(e);
                                         });
                                 }

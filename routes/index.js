@@ -26,7 +26,7 @@ router.get('/', function (req, res) {
 
     //每天0点自动抓，显示前一天0点以后的文章
     var d = new Date();
-    d.setDate(d.getDate() - 10);
+    d.setDate(d.getDate() - 1);
     d.setHours(0);
 
     Posts.find({postTime: {$gte: d}}, 'title url postTime feedId', {sort: '-postTime'})
@@ -76,10 +76,10 @@ router.get('/posts/:page', function (req, res) {
         });
 });
 
-router.get('/post/:id', function(req, res) {
+router.get('/post/:id', function (req, res) {
     var postId = req.param('id');
-    Posts.findById(postId, function(err, post){
-        if (err){
+    Posts.findById(postId, function (err, post) {
+        if (err) {
             return res.send(500, {
                 error: err
             });
