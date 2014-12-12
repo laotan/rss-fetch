@@ -1,0 +1,19 @@
+<div class="uk-grid">
+    <div class="uk-width-small-1-1">
+        <h1>RSS Fetch</h1>
+    </div>
+</div>
+<div class="uk-grid">
+    <div class="uk-width-small-1-1">
+        <nav class="uk-navbar">
+            <ul class="uk-navbar-nav">
+                {% for key, val in menus %}
+                    <li {% if key == activeMenu %} class="uk-active" {% endif %}>
+                        <a href="{{ val.url }}" title="{{ val.title }}">{{ val.title }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </nav>
+    </div>
+</div>
+    

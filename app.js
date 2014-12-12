@@ -14,10 +14,12 @@ var rss = require('./routes/rss');
 var app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+var swig  = require('swig');
+app.engine('html', swig.renderFile);
+app.set('view engine', 'html');
+app.set('views', __dirname + '/views');
 
-app.locals.moment = require('moment');
+//app.locals.moment = require('moment');
 app.use(favicon());
 app.use(logger('dev'));
 app.use(bodyParser.json());

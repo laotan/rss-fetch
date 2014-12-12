@@ -4,7 +4,10 @@ var router = express.Router();
 var mongoose = require('mongoose');
 var Feeds = mongoose.model('Feeds');
 var Posts = mongoose.model('Posts');
+
 var AUTH_KEY = "YourAdminKey";
+
+var pagination = require('pagination');
 
 var siteMenus = [
     {
@@ -13,7 +16,7 @@ var siteMenus = [
     },
     {
         "title": "All Posts",
-        "url": "/posts/1"
+        "url": "/posts"
     },
     {
         "title": "All Feeds",
@@ -48,8 +51,11 @@ router.get('/', function (req, res) {
         });
 });
 
+router.get('/posts', function(req, res){
+    res.redirect('/posts/page/1');
+});
 /* GET all post page. */
-router.get('/posts/:page', function (req, res) {
+router.get('/posts/page/:page', function (req, res) {
     var perPage = 10,
         page = req.param('page') > 1 ? req.param('page') - 1 : 0;
 
@@ -63,13 +69,54 @@ router.get('/posts/:page', function (req, res) {
                 if (req.param("callback")) {
                     return res.jsonp(posts);
                 } else {
+
+                    var ukPaginator = new pagination.TemplatePaginator({
+                        prelink: '/posts/',
+                        current: page + 1,
+                        rowsPerPage: perPage,
+                        totalResult: count,
+                        slashSeparator: true,
+                        template: function(result) {
+                            var i, len, prelink;
+                            var html = '<ul class="uk-pagination">';
+                            if(result.pageCount < 2) {
+                                return "";
+                            }
+                            prelink = this.preparePreLink(result.prelink);
+                            if(result.previous) {
+                                html += '<li><a href="' + prelink + result.previous + '"><i class="uk-icon-angle-double-left"></i></a></li>';
+                            }
+                            if(result.range.length) {
+                                var len = result.range.length;
+                                if(result.range[0] > 2){
+                                    html += '<li><a href="' + prelink + result.first + '">' + result.first + '</a></li>';
+                                    html += '<li><span>...</span></li>';
+                                }
+                                for( i = 0, len; i < len; i++) {
+                                    if(result.range[i] === result.current) {
+                                        html += '<li class="uk-active"><span>' + result.range[i] + '</span></li>';
+                                    } else {
+                                        html += '<li><a href="' + prelink + result.range[i] + '">' + result.range[i] + '</a></li>';
+                                    }
+                                }
+                                if(result.range[0] + 5 < result.last ){
+                                    html += '<li><span>...</span></li>';
+                                    html += '<li><a href="' + prelink + result.last + '">' + result.last + '</a></li>';
+                                }
+                            }
+                            if(result.next) {
+                                html += '<li><a href="' + prelink + result.next + '"><i class="uk-icon-angle-double-right"></i></a></li>';
+                            }
+                            html += '</ul>';
+                            return html;
+                        }
+                    });
                     return res.render('index', {
                         title: 'All Posts',
                         menus: siteMenus,
                         activeMenu: 1,
                         posts: posts,
-                        page: page + 1,
-                        pages: Math.ceil(count / perPage)
+                        pager: ukPaginator.render()
                     });
                 }
             });

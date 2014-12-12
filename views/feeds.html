@@ -1,0 +1,42 @@
+{% extends "./layout.html" %}
+{% block content %}
+<div class="uk-grid">
+    <div class="uk-width-large-1-1">
+        {% if auth %}
+        <form class="uk-form" action="/new" method="post">
+            <fieldset>
+                <input class="uk-form-width-large" type="text" placeholder="RSS url" name="feedUrl"/>
+                <button class="uk-button">确认添加</button>
+            </fieldset>
+        </form>
+        <hr/>
+        {% endif %}
+        <table class="uk-table uk-table-hover">
+            <thead>
+            <tr>
+                <th>Blog</th>
+                <th>Feed Url</th>
+                <th>Create At</th>
+                {% if auth %}
+                <th>Delete</th>
+                {% endif %}
+            </tr>
+            </thead>
+            <tbody>
+            {% for feed in feeds %}
+            <tr>
+                <td><a href="{{ feed.url }}" title="{{ feed.title }}" target="_blank">{{ feed.title }}</a></td>
+                <td>{{ feed.feedUrl }}</td>
+                <td>{{ feed.createTime|date('Y-m-d') }}</td>
+                {% if auth %}
+                <td>
+                    <a class="uk-button uk-button-danger" href="/del/{{ feed._id }}">删除</a>
+                </td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
