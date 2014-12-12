@@ -27,7 +27,7 @@
                 </li>
                 {% endfor %}
             </ul>
-            {{ pager }}
+            {% autoescape false %}{{ pager }}{% endautoescape %}
         {% else %}
             <div class="uk-alert uk-alert-warning">没有文章，o(╯□╰)o</div>
         {% endif %}
